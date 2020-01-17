@@ -1,0 +1,6 @@
+framework module Pods_NTSRadio {
+  umbrella header "Pods-NTSRadio-umbrella.h"
+
+  export *
+  module * { export * }
+}

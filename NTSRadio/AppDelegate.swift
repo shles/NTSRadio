@@ -7,15 +7,29 @@
 //
 
 import UIKit
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        let navigationController = UINavigationController()
+            
+        let viewController = StreamsListViewController(streams: StreamsFromAPI(),
+                                      transition: {
+                                        navigationController.pushViewController(
+                                            StreamViewController(stream: ObservableStreamFrom(origin: $0)),
+                                            animated: true)
+                                    })
+        navigationController.viewControllers = [viewController]
+        navigationController.setNavigationBarHidden(true, animated: false)
+        window = UIWindow()
+        self.window?.rootViewController = navigationController
+        self.window?.makeKeyAndVisible()
+        (UIApplication.shared.value(forKey:"statusBarWindow") as! UIView).subviews[0].backgroundColor = .black
         return true
     }
 
